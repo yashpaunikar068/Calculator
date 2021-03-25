@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <script src="https://unpkg.com/react@16/umd/react.development.js" crossorigin></script>
+    <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js" crossorigin></script>
+    <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+    <title>Calculator</title>
+    <style>
+      *{
+        background-color: rgb(188, 194, 163);
+      }
+      button {
+        display: inline-block;
+        padding: 15px 25px;
+        font-size: 24px;
+        cursor: pointer;
+        text-align: center;
+        text-decoration: none;
+        outline: none;
+        color: #fff;
+        background-color: #4CAF50;
+        border: none;
+        border-radius: 15px;
+        box-shadow: 0 9px #999;
+        margin-right: 8px;
+      }
+
+      button:hover {background-color: #3e8e41;}
+
+      button:active {
+        background-color: #3e8e41;
+        box-shadow: 0 5px #666;
+        transform: translateY(4px);
+      }
+      input[type=text] {
+        width: 50%;
+        padding: 12px 20px;
+        margin: 3px 0;
+        border: 2px solid red;
+        border-radius: 4px;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="app" />
+    <script type="text/babel">
+
+      class Calculator extends React.Component {
+        constructor(props) {
+          super(props);
+          this.state = {
+            num1: 0,
+            num2: 0,
+            operand: '',
+            ans: 0
+          };
+        }
+
+        render() {
+          return (
+            <div>
+              <h1>A Basic Calculator</h1>
+              <input type="input1" onChange={this.updateA} type="text" placeholder='enter number'/>
+              <input type="input2" onChange={this.updateB} type="text" placeholder='enter number'/>
+              <h1>{this.state.operand} of {this.state.num1} and {this.state.num2} is {this.state.ans}</h1>
+              <br/>
+              <button onClick={this.add}>+</button>
+              <button onClick={this.sub}>-</button>
+              <button onClick={this.mult}>*</button>
+              <button onClick={this.div}>/</button>
+            </div>
+          );
+        }
+        
+        updateA = (event) => {
+          this.setState({
+            num1: parseInt(event.target.value)
+          });
+        }
+        updateB = (event) => {
+          this.setState({
+            num2: parseInt(event.target.value)
+          });
+        }
+        // set state takes object as argument
+        add = () => {
+          this.setState({
+
+            operand: 'Addition',
+            ans: this.state.num1 + this.state.num2
+          });
+        }
+
+        sub = () => {
+          this.setState(state => ({
+            operand: 'Subtraction',
+            ans: state.num1 - state.num2
+          }));
+        }
+
+        mult = () => {
+          this.setState(state => ({
+            operand: 'Multiplication',
+            ans: this.state.num1 * this.state.num2
+          }));
+        }
+
+        div = () => {
+          this.setState(state => ({
+            operand: 'Division',
+            ans: this.state.num1 / this.state.num2
+          }));
+        }
+
+      }
+
+      class Bmi extends React.Component {
+        constructor(props) {
+          super(props);
+          this.state = {
+            weight: 0,
+            heightft: 0,
+            heightin: 0,
+            ans: 0
+          };
+        }
+
+        render() {
+          return (
+            <div>
+              <h1>BMI Calculator</h1>
+              <input type="input1" onChange={this.updateA} type="text" placeholder='enter weight in kg'/>
+              <input type="input2" onChange={this.updateB} type="text" placeholder='ft'/>
+              <input type="input3" onChange={this.updateC} type="text" placeholder='in'/> 
+              <br/>
+              <button onClick={this.calc}>BMI</button>
+              <h1>The BMI is {this.state.ans}</h1>
+              <hr/>
+            </div>
+          );
+        }
+        
+        updateA = (event) => {
+          this.setState({
+            weight: parseInt(event.target.value)
+          });
+        }
+        updateB = (event) => {
+          this.setState({
+            heightft: parseInt(event.target.value)
+          });
+        }
+        // set state takes object as argument
+        updateC = (event) => {
+          this.setState({
+            heightin: parseInt(event.target.value)
+          });
+        }
+
+        calc = () => {
+          let heightInMtr = this.state.heightft * 0.3048 + this.state.heightin * 0.0254
+          let bmi = this.state.weight/ (heightInMtr * heightInMtr)
+          this.setState(state => ({
+            ans: bmi
+          }));
+        }
+
+      }
+
+      class App extends React.Component {
+
+        render() {
+          return (
+            <div>
+              <Bmi />
+              <Calculator />
+            </div>
+          );
+        }
+      }
+
+      ReactDOM.render(<App />, document.querySelector("#app"));
+
+    </script>
+  </body>
+</html>
